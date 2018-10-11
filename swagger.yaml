@@ -1,0 +1,25 @@
+---
+swagger: 2.0
+info:
+  version: 2016-12-20T18:27:47Z
+  title:
+    Fn::Sub: ${Project}-${Stage}
+basePath: /api
+schemes:
+- https
+paths:
+  /api/test:
+    get:
+      produces:
+      - application/json
+      responses:
+        200:
+          description: Test service
+          headers:
+            Content-Type:
+              type: string
+      x-amazon-apigateway-integration:
+        uri:
+          Fn::Sub: arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${TestFunction.Arn}/invocations
+        httpMethod: POST
+        type: aws_proxy

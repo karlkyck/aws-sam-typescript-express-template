@@ -14,7 +14,10 @@
     "build": "run-s clean lint audit compile test copydependencies",
     "deploy": "node scripts/deploy.js -n $npm_package_name"
   },
-  "dependencies": {},
+  "dependencies": {
+    "aws-serverless-express": "^3.3.5",
+    "express": "^4.16.4"
+  },
   "devDependencies": {
     "@types/aws-lambda": "^8.10.11",
     "@types/jest": "^23.3.1",

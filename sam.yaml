@@ -2,11 +2,39 @@ AWSTemplateFormatVersion: '2010-09-09'
 Transform: AWS::Serverless-2016-10-31
 
 Parameters:
+  ProjectName:
+    Type: String
+    Default: aws-sam-typescript-express-template
   Stage:
     Type: String
     Default: dev
+
 Globals:
   Function:
     Runtime: nodejs8.10
     Timeout: 180
     Tracing: Active
+
+Resources:
+  ApiGatewayApi:
+    Type: AWS::Serverless::Api
+    Properties:
+      StageName: !Ref Stage
+      DefinitionBody:
+        'Fn::Transform':
+          Name: 'AWS::Include'
+          Parameters:
+            Location: !Join [ '', [ !Sub 's3://${ProjectName}-swagger-${Stage}/swagger.yaml'  ] ]
+
+  UserRegistrationFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: Handler.handler
+      CodeUri: ./dist
+      Events:
+        CreateUserRegistration:
+          Type: Api
+          Properties:
+            RestApiId: !Ref ApiGatewayApi
+            Path: /api/test
+            Method: get
