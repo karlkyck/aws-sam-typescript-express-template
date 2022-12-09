@@ -16,7 +16,7 @@
   },
   "dependencies": {
     "aws-serverless-express": "^3.3.5",
-    "express": "^4.16.4"
+    "express": "^4.17.3"
   },
   "devDependencies": {
     "@types/aws-lambda": "^8.10.11",
